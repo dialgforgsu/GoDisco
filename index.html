@@ -19,6 +19,8 @@
             --text-dim: #4a5270;
             --green: #22c55e;
             --amber: #f59e0b;
+            --blue: #3b82f6;
+            --blue-dim: rgba(59,130,246,0.1);
         }
 
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -46,56 +48,32 @@
         }
 
         .rg-logo {
-            width: 32px;
-            height: 32px;
+            width: 32px; height: 32px;
             background: var(--red);
             border-radius: 7px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 16px;
-            color: white;
-            letter-spacing: -1px;
-            flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 900; font-size: 16px; color: white;
+            letter-spacing: -1px; flex-shrink: 0;
         }
 
-        .header-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: white;
-        }
-
-        .header-subtitle {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
+        .header-title { font-size: 16px; font-weight: 600; color: white; }
+        .header-subtitle { font-size: 12px; color: var(--text-muted); }
 
         .header-right {
-            margin-left: auto;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 12px;
-            color: var(--text-dim);
+            margin-left: auto; display: flex; align-items: center;
+            gap: 8px; font-size: 12px; color: var(--text-dim);
         }
 
         .header-badge {
-            background: rgba(204, 0, 0, 0.15);
-            border: 1px solid rgba(204, 0, 0, 0.3);
+            background: rgba(204,0,0,0.15);
+            border: 1px solid rgba(204,0,0,0.3);
             color: var(--red-light);
-            border-radius: 4px;
-            padding: 2px 8px;
-            font-size: 11px;
-            font-weight: 600;
+            border-radius: 4px; padding: 2px 8px;
+            font-size: 11px; font-weight: 600;
         }
 
         /* ── Layout ── */
-        .main {
-            max-width: 1160px;
-            margin: 0 auto;
-            padding: 28px 24px 60px;
-        }
+        .main { max-width: 1160px; margin: 0 auto; padding: 28px 24px 60px; }
 
         /* ── Cards ── */
         .card {
@@ -107,355 +85,294 @@
         }
 
         .card-label {
-            font-size: 11px;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: var(--text-muted);
-            margin-bottom: 14px;
-            font-weight: 600;
+            font-size: 11px; text-transform: uppercase;
+            letter-spacing: 0.1em; color: var(--text-muted);
+            margin-bottom: 14px; font-weight: 600;
         }
 
         /* ── API Key ── */
-        .api-row {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
+        .api-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+        .api-label { font-size: 13px; color: var(--text-muted); white-space: nowrap; }
 
-        .api-label {
-            font-size: 13px;
-            color: var(--text-muted);
-            white-space: nowrap;
-        }
-
-        input[type="text"],
-        textarea {
+        .api-key-input {
+            flex: 1; min-width: 260px;
             background: var(--surface-2);
             border: 1px solid var(--border);
-            border-radius: 8px;
-            color: var(--text);
-            padding: 9px 13px;
-            font-size: 13px;
-            font-family: inherit;
-            outline: none;
+            border-radius: 8px; color: var(--text);
+            padding: 9px 13px; font-size: 13px;
+            font-family: monospace; outline: none;
             transition: border-color 0.2s;
         }
+        .api-key-input:focus { border-color: var(--red); }
 
-        input[type="text"]:focus,
-        textarea:focus {
-            border-color: var(--red);
+        .api-status {
+            font-size: 12px; padding: 3px 8px;
+            border-radius: 5px; font-weight: 500;
         }
+        .api-status.saved { color: var(--green); background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.25); }
+        .api-status.missing { color: var(--amber); background: rgba(245,158,11,0.1); border: 1px solid rgba(245,158,11,0.25); }
 
+        /* ── Inputs ── */
+        input[type="text"], input[type="email"], textarea {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 8px; color: var(--text);
+            padding: 9px 13px; font-size: 13px;
+            font-family: inherit; outline: none;
+            transition: border-color 0.2s;
+        }
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        textarea:focus { border-color: var(--red); }
 
         /* ── Buttons ── */
         button {
-            background: var(--red);
-            color: white;
-            border: none;
-            border-radius: 8px;
-            padding: 10px 20px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            font-family: inherit;
+            background: var(--red); color: white;
+            border: none; border-radius: 8px;
+            padding: 10px 20px; font-size: 13px; font-weight: 600;
+            cursor: pointer; font-family: inherit;
             transition: background 0.15s, opacity 0.15s, transform 0.1s;
             white-space: nowrap;
         }
-
         button:hover:not(:disabled) { background: var(--red-dark); }
         button:active:not(:disabled) { transform: scale(0.98); }
-
-        button:disabled {
-            opacity: 0.45;
-            cursor: not-allowed;
-        }
+        button:disabled { opacity: 0.45; cursor: not-allowed; }
 
         .btn-ghost {
-            background: var(--surface-2);
-            color: var(--text-muted);
+            background: var(--surface-2); color: var(--text-muted);
             border: 1px solid var(--border);
         }
+        .btn-ghost:hover:not(:disabled) { background: var(--border); color: var(--text); }
 
-        .btn-ghost:hover:not(:disabled) {
-            background: var(--border);
-            color: var(--text);
+        .btn-blue {
+            background: var(--blue);
         }
+        .btn-blue:hover:not(:disabled) { background: #2563eb; }
 
-        .btn-sm {
-            padding: 7px 14px;
-            font-size: 12px;
-        }
+        .btn-sm { padding: 7px 14px; font-size: 12px; }
 
         /* ── Product toggles ── */
-        .products-row {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
+        .products-row { display: flex; gap: 10px; flex-wrap: wrap; }
 
         .product-pill {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
-            border-radius: 24px;
-            border: 2px solid var(--border);
-            background: var(--surface-2);
-            cursor: pointer;
-            user-select: none;
+            display: flex; align-items: center; gap: 8px;
+            padding: 8px 16px; border-radius: 24px;
+            border: 2px solid var(--border); background: var(--surface-2);
+            cursor: pointer; user-select: none;
             transition: border-color 0.2s, background 0.2s;
-            font-size: 13px;
-            font-weight: 500;
+            font-size: 13px; font-weight: 500;
         }
-
         .product-pill:hover { border-color: var(--border-hover); }
-
-        .product-pill.on {
-            border-color: var(--red);
-            background: rgba(204, 0, 0, 0.08);
-            color: #fff;
-        }
+        .product-pill.on { border-color: var(--red); background: rgba(204,0,0,0.08); color: #fff; }
 
         .pill-dot {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: var(--border);
-            transition: background 0.2s;
-            flex-shrink: 0;
+            width: 7px; height: 7px; border-radius: 50%;
+            background: var(--border); transition: background 0.2s; flex-shrink: 0;
         }
-
         .product-pill.on .pill-dot { background: var(--red-light); }
 
-        /* ── Search input ── */
+        /* ── Search grid ── */
         .search-grid {
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 14px;
-            align-items: start;
+            display: grid; grid-template-columns: 1fr auto;
+            gap: 14px; align-items: start;
         }
 
         textarea#companyInput {
-            width: 100%;
-            resize: vertical;
-            min-height: 90px;
-            line-height: 1.6;
+            width: 100%; resize: vertical; min-height: 90px; line-height: 1.6;
         }
 
-        .search-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            padding-top: 1px;
+        .search-actions { display: flex; flex-direction: column; gap: 8px; padding-top: 1px; }
+
+        /* ── Contact grid ── */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr auto;
+            gap: 12px; align-items: end;
         }
+        .contact-field label {
+            display: block; font-size: 11px;
+            color: var(--text-dim); text-transform: uppercase;
+            letter-spacing: 0.08em; font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .contact-field input { width: 100%; }
 
         /* ── History ── */
-        .history-wrap {
-            margin-bottom: 14px;
-        }
-
-        .history-row {
-            display: flex;
-            gap: 7px;
-            flex-wrap: wrap;
-            margin-top: 8px;
-        }
-
+        .history-wrap { margin-bottom: 14px; }
+        .history-row { display: flex; gap: 7px; flex-wrap: wrap; margin-top: 8px; }
         .history-chip {
-            background: var(--surface-2);
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            padding: 4px 11px;
-            font-size: 12px;
-            color: var(--text-muted);
-            cursor: pointer;
-            transition: all 0.15s;
-            max-width: 220px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            background: var(--surface-2); border: 1px solid var(--border);
+            border-radius: 6px; padding: 4px 11px;
+            font-size: 12px; color: var(--text-muted); cursor: pointer;
+            transition: all 0.15s; max-width: 220px;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
         }
-
-        .history-chip:hover {
-            border-color: var(--red);
-            color: var(--text);
-        }
+        .history-chip:hover { border-color: var(--red); color: var(--text); }
 
         /* ── Status ── */
         .status-bar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            padding: 12px 16px;
-            border-radius: 9px;
-            font-size: 13px;
-            margin-bottom: 16px;
+            display: flex; align-items: center; gap: 10px;
+            padding: 12px 16px; border-radius: 9px;
+            font-size: 13px; margin-bottom: 16px;
         }
-
         .status-bar.loading {
-            background: rgba(245, 158, 11, 0.08);
-            border: 1px solid rgba(245, 158, 11, 0.25);
-            color: var(--amber);
+            background: rgba(245,158,11,0.08);
+            border: 1px solid rgba(245,158,11,0.25); color: var(--amber);
         }
-
         .status-bar.error {
-            background: rgba(204, 0, 0, 0.08);
-            border: 1px solid rgba(204, 0, 0, 0.25);
-            color: #ff6666;
+            background: rgba(204,0,0,0.08);
+            border: 1px solid rgba(204,0,0,0.25); color: #ff6666;
         }
 
         .spinner {
-            width: 15px;
-            height: 15px;
-            border: 2px solid currentColor;
-            border-top-color: transparent;
-            border-radius: 50%;
-            animation: spin 0.75s linear infinite;
-            flex-shrink: 0;
-            opacity: 0.8;
+            width: 15px; height: 15px;
+            border: 2px solid currentColor; border-top-color: transparent;
+            border-radius: 50%; animation: spin 0.75s linear infinite;
+            flex-shrink: 0; opacity: 0.8;
         }
-
         @keyframes spin { to { transform: rotate(360deg); } }
 
         /* ── Results grid ── */
         .results-pair {
-            display: grid;
-            grid-template-columns: 1fr 280px;
-            gap: 16px;
-            margin-bottom: 16px;
+            display: grid; grid-template-columns: 1fr 280px;
+            gap: 16px; margin-bottom: 16px;
         }
 
         .result-box {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px 22px;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 12px; padding: 20px 22px;
         }
 
         .result-box-label {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            color: var(--text-dim);
-            font-weight: 700;
-            margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 7px;
+            font-size: 10px; text-transform: uppercase;
+            letter-spacing: 0.12em; color: var(--text-dim);
+            font-weight: 700; margin-bottom: 12px;
+            display: flex; align-items: center; gap: 7px;
         }
-
         .result-box-label::before {
-            content: '';
-            display: block;
-            width: 2px;
-            height: 12px;
-            background: var(--red);
-            border-radius: 2px;
+            content: ''; display: block;
+            width: 2px; height: 12px;
+            background: var(--red); border-radius: 2px;
         }
+        .result-box-label.blue-accent::before { background: var(--blue); }
 
         .summary-body {
-            font-size: 13.5px;
-            line-height: 1.75;
-            color: var(--text);
-            white-space: pre-wrap;
+            font-size: 13.5px; line-height: 1.75;
+            color: var(--text); white-space: pre-wrap;
         }
 
         .revenue-figure {
-            font-size: 30px;
-            font-weight: 700;
-            color: var(--green);
-            line-height: 1.1;
-            margin-bottom: 5px;
+            font-size: 30px; font-weight: 700;
+            color: var(--green); line-height: 1.1; margin-bottom: 5px;
         }
-
-        .revenue-figure.unknown {
-            font-size: 22px;
-            color: var(--text-dim);
-        }
-
-        .revenue-meta {
-            font-size: 12px;
-            color: var(--text-muted);
-        }
+        .revenue-figure.unknown { font-size: 22px; color: var(--text-dim); }
+        .revenue-meta { font-size: 12px; color: var(--text-muted); }
 
         /* ── News ── */
         .news-box {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 20px 22px;
+            background: var(--surface); border: 1px solid var(--border);
+            border-radius: 12px; padding: 20px 22px;
         }
-
         .news-header {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 14px;
+            display: flex; align-items: center;
+            justify-content: space-between; margin-bottom: 14px;
         }
-
-        .news-count {
-            font-size: 12px;
-            color: var(--text-dim);
-        }
+        .news-count { font-size: 12px; color: var(--text-dim); }
 
         .news-item {
-            border: 1px solid var(--border);
-            border-radius: 9px;
-            padding: 13px 15px;
-            margin-bottom: 9px;
+            border: 1px solid var(--border); border-radius: 9px;
+            padding: 13px 15px; margin-bottom: 9px;
             transition: border-color 0.15s, background 0.15s;
         }
-
         .news-item:last-child { margin-bottom: 0; }
-
-        .news-item:hover {
-            border-color: var(--border-hover);
-            background: var(--surface-2);
-        }
-
+        .news-item:hover { border-color: var(--border-hover); background: var(--surface-2); }
         .news-item.filtered-out { display: none; }
 
         .news-title {
-            font-size: 13.5px;
-            font-weight: 500;
-            color: var(--text);
-            text-decoration: none;
-            display: block;
-            margin-bottom: 5px;
-            line-height: 1.4;
+            font-size: 13.5px; font-weight: 500; color: var(--text);
+            text-decoration: none; display: block;
+            margin-bottom: 5px; line-height: 1.4;
         }
-
         .news-title:hover { color: var(--red-light); }
-
-        .news-desc {
-            font-size: 12px;
-            color: var(--text-muted);
-            line-height: 1.55;
-            margin-bottom: 8px;
-        }
-
-        .news-tags {
-            display: flex;
-            gap: 5px;
-            flex-wrap: wrap;
-        }
-
+        .news-desc { font-size: 12px; color: var(--text-muted); line-height: 1.55; margin-bottom: 8px; }
+        .news-tags { display: flex; gap: 5px; flex-wrap: wrap; }
         .news-tag {
-            font-size: 10.5px;
-            font-weight: 600;
-            background: rgba(204, 0, 0, 0.12);
-            color: rgba(255, 100, 100, 0.9);
-            border: 1px solid rgba(204, 0, 0, 0.25);
-            border-radius: 4px;
-            padding: 2px 7px;
+            font-size: 10.5px; font-weight: 600;
+            background: rgba(204,0,0,0.12); color: rgba(255,100,100,0.9);
+            border: 1px solid rgba(204,0,0,0.25);
+            border-radius: 4px; padding: 2px 7px;
         }
 
-        .empty-state {
-            text-align: center;
-            color: var(--text-dim);
-            padding: 28px 16px;
-            font-size: 13px;
+        .empty-state { text-align: center; color: var(--text-dim); padding: 28px 16px; font-size: 13px; }
+
+        /* ── Contact profile results ── */
+        .contact-results-box {
+            background: var(--surface); border: 1px solid var(--blue);
+            border-radius: 12px; padding: 20px 22px; margin-bottom: 16px;
+        }
+
+        .contact-profile-header {
+            display: flex; align-items: flex-start; gap: 16px; margin-bottom: 18px;
+            padding-bottom: 18px; border-bottom: 1px solid var(--border);
+        }
+
+        .contact-avatar {
+            width: 48px; height: 48px; border-radius: 50%;
+            background: linear-gradient(135deg, var(--blue) 0%, #6366f1 100%);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; font-weight: 700; color: white; flex-shrink: 0;
+        }
+
+        .contact-name { font-size: 18px; font-weight: 700; color: white; margin-bottom: 3px; }
+        .contact-role { font-size: 13px; color: var(--text-muted); }
+
+        .contact-links { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; }
+        .contact-link {
+            display: inline-flex; align-items: center; gap: 5px;
+            background: var(--surface-2); border: 1px solid var(--border);
+            border-radius: 6px; padding: 5px 10px;
+            font-size: 12px; color: var(--text-muted);
+            text-decoration: none; transition: all 0.15s;
+        }
+        .contact-link:hover { border-color: var(--blue); color: #93c5fd; }
+        .contact-link.li { border-color: rgba(59,130,246,0.4); color: #93c5fd; }
+
+        .contact-sections { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+        .contact-section {
+            background: var(--surface-2); border: 1px solid var(--border);
+            border-radius: 9px; padding: 14px 16px;
+        }
+        .contact-section-title {
+            font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em;
+            color: var(--blue); font-weight: 700; margin-bottom: 10px;
+        }
+        .contact-section-body {
+            font-size: 13px; color: var(--text); line-height: 1.65;
+            white-space: pre-wrap;
+        }
+
+        .talking-points { grid-column: 1 / -1; }
+
+        .talking-point {
+            display: flex; gap: 10px; padding: 9px 0;
+            border-bottom: 1px solid var(--border); font-size: 13px;
+            color: var(--text); line-height: 1.5;
+        }
+        .talking-point:last-child { border-bottom: none; padding-bottom: 0; }
+        .talking-point-bullet {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: var(--blue); flex-shrink: 0; margin-top: 6px;
+        }
+
+        /* ── Section divider ── */
+        .section-divider {
+            display: flex; align-items: center; gap: 14px;
+            margin: 8px 0 16px; color: var(--text-dim); font-size: 11px;
+            text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600;
+        }
+        .section-divider::before, .section-divider::after {
+            content: ''; flex: 1; height: 1px; background: var(--border);
         }
 
         /* ── Responsive ── */
@@ -463,6 +380,9 @@
             .results-pair { grid-template-columns: 1fr; }
             .search-grid { grid-template-columns: 1fr; }
             .search-actions { flex-direction: row; }
+            .contact-grid { grid-template-columns: 1fr; }
+            .contact-sections { grid-template-columns: 1fr; }
+            .talking-points { grid-column: 1; }
             header { padding: 0 16px; }
             .main { padding: 16px 14px 40px; }
             .header-right { display: none; }
@@ -485,6 +405,17 @@
 
 <div class="main">
 
+    <!-- API Key -->
+    <div class="card">
+        <div class="card-label">Anthropic API Key</div>
+        <div class="api-row">
+            <span class="api-label">API Key</span>
+            <input class="api-key-input" type="password" id="apiKeyInput" placeholder="sk-ant-…" autocomplete="off" oninput="saveApiKey(this.value)" />
+            <span class="api-status" id="apiStatus">—</span>
+        </div>
+        <div style="margin-top:8px;font-size:12px;color:var(--text-dim)">Stored in your browser only — never sent anywhere except directly to Anthropic.</div>
+    </div>
+
     <!-- Product focus -->
     <div class="card">
         <div class="card-label">Focus Products — click to toggle filters</div>
@@ -504,7 +435,7 @@
         </div>
     </div>
 
-    <!-- Search -->
+    <!-- Company Search -->
     <div class="card">
         <div class="card-label">Company Research</div>
 
@@ -522,10 +453,32 @@
         </div>
     </div>
 
-    <!-- Status -->
+    <!-- Contact Research -->
+    <div class="card">
+        <div class="card-label">Contact Research — Cross-match with a specific person</div>
+        <div class="contact-grid">
+            <div class="contact-field">
+                <label>Full Name</label>
+                <input type="text" id="contactName" placeholder="e.g. Jane Smith" />
+            </div>
+            <div class="contact-field">
+                <label>Email Address</label>
+                <input type="email" id="contactEmail" placeholder="e.g. jane@company.com" oninput="autoFillDomain(this.value)" />
+            </div>
+            <div class="contact-field">
+                <label>Corporate Domain</label>
+                <input type="text" id="contactDomain" placeholder="e.g. company.com" />
+            </div>
+            <div>
+                <button class="btn-blue" id="contactBtn" onclick="runContactSearch()">Research Contact</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Company Status -->
     <div id="statusWrap" style="display:none"></div>
 
-    <!-- Results -->
+    <!-- Company Results -->
     <div id="results" style="display:none">
 
         <div class="results-pair">
@@ -549,10 +502,30 @@
         </div>
 
     </div>
+
+    <!-- Contact Status -->
+    <div id="contactStatusWrap" style="display:none"></div>
+
+    <!-- Contact Results -->
+    <div id="contactResults" style="display:none">
+        <div class="section-divider">Contact Intelligence</div>
+        <div class="contact-results-box">
+            <div class="contact-profile-header">
+                <div class="contact-avatar" id="contactAvatar">?</div>
+                <div style="flex:1">
+                    <div class="contact-name" id="contactResultName">—</div>
+                    <div class="contact-role" id="contactResultRole">—</div>
+                    <div class="contact-links" id="contactLinksRow"></div>
+                </div>
+            </div>
+            <div class="contact-sections" id="contactSections"></div>
+        </div>
+    </div>
+
 </div>
 
 <script>
-    /* ── State ── */
+    /* ── Constants ── */
     const PRODUCTS = {
         flyway:   'Flyway',
         tdm:      'Test Data Manager',
@@ -560,14 +533,24 @@
         toolbelt: 'Toolbelt Essentials'
     };
 
+    const ANTHROPIC_URL = 'https://api.anthropic.com/v1/messages';
+
+    /* ── State ── */
     let activeProducts = new Set(Object.keys(PRODUCTS));
-    let sessionData    = {};   // in-memory mirror of sessionStorage
+    let sessionData    = {};
 
     /* ── Init ── */
     (function init() {
-        try {
-            sessionData = JSON.parse(sessionStorage.getItem('rg_session') || '{}');
-        } catch (_) { sessionData = {}; }
+        try { sessionData = JSON.parse(sessionStorage.getItem('rg_session') || '{}'); }
+        catch (_) { sessionData = {}; }
+
+        const saved = localStorage.getItem('rg_api_key') || '';
+        if (saved) {
+            document.getElementById('apiKeyInput').value = saved;
+            setApiStatus(true);
+        } else {
+            setApiStatus(false);
+        }
 
         renderHistory();
 
@@ -575,6 +558,23 @@
             if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); runSearch(); }
         });
     })();
+
+    /* ── API key ── */
+    function saveApiKey(val) {
+        const trimmed = val.trim();
+        localStorage.setItem('rg_api_key', trimmed);
+        setApiStatus(!!trimmed);
+    }
+
+    function setApiStatus(ok) {
+        const el = document.getElementById('apiStatus');
+        el.textContent = ok ? 'Saved' : 'Not set';
+        el.className   = 'api-status ' + (ok ? 'saved' : 'missing');
+    }
+
+    function getApiKey() {
+        return (localStorage.getItem('rg_api_key') || '').trim();
+    }
 
     /* ── Product toggles ── */
     function toggleProduct(el) {
@@ -584,9 +584,16 @@
         filterNews();
     }
 
-    /* ── Status helper ── */
-    function setStatus(type, msg) {
-        const wrap = document.getElementById('statusWrap');
+    /* ── Auto-fill domain from email ── */
+    function autoFillDomain(email) {
+        const match = email.match(/@([\w.-]+\.[a-z]{2,})$/i);
+        if (match) document.getElementById('contactDomain').value = match[1];
+    }
+
+    /* ── Status helpers ── */
+    function setStatus(type, msg, prefix) {
+        const id   = prefix === 'contact' ? 'contactStatusWrap' : 'statusWrap';
+        const wrap = document.getElementById(id);
         if (!type) { wrap.style.display = 'none'; return; }
         wrap.style.display = 'block';
         wrap.innerHTML = type === 'loading'
@@ -594,10 +601,41 @@
             : `<div class="status-bar error">⚠&nbsp; ${msg}</div>`;
     }
 
-    /* ── Main search ── */
+    /* ── Shared Claude call ── */
+    async function callClaude(payload) {
+        const key = getApiKey();
+        if (!key) throw new Error('No API key set — please enter your Anthropic API key above.');
+
+        const resp = await fetch(ANTHROPIC_URL, {
+            method: 'POST',
+            headers: {
+                'Content-Type':                          'application/json',
+                'x-api-key':                             key,
+                'anthropic-version':                     '2023-06-01',
+                'anthropic-beta':                        'web-search-2025-03-05',
+                'anthropic-dangerous-direct-browser-access': 'true',
+            },
+            body: JSON.stringify(payload),
+        });
+
+        const data = await resp.json();
+        if (!resp.ok) throw new Error(data.error?.message || `HTTP ${resp.status}`);
+        return data;
+    }
+
+    /* ── Extract text from Claude response ── */
+    function extractText(data) {
+        let raw = '';
+        for (const block of (data.content || [])) {
+            if (block.type === 'text') raw += block.text;
+        }
+        raw = raw.replace(/^```(?:json)?\s*/im, '').replace(/\s*```\s*$/im, '').trim();
+        return raw;
+    }
+
+    /* ── Company research ── */
     async function runSearch() {
         const query = document.getElementById('companyInput').value.trim();
-
         if (!query) return setStatus('error', 'Please enter a company name or details to research.');
 
         const btn = document.getElementById('searchBtn');
@@ -628,7 +666,7 @@ CRITICAL: Respond with ONLY a single valid JSON object — no markdown fences, n
       "title": "string",
       "url": "string — must be a real URL from search results",
       "description": "string — 1–2 sentences on why this matters for the sales conversation",
-      "products": ["flyway","tdm","monitor","toolbelt"] // include only the relevant product keys
+      "products": ["flyway","tdm","monitor","toolbelt"]
     }
   ]
 }
@@ -644,38 +682,18 @@ The salesperson's primary product interest: ${selected}.
 Use web search to find: company overview, tech stack, database infrastructure, DevOps/cloud initiatives, data compliance obligations, recent news, financial data, headcount. Return the structured JSON.`;
 
         try {
-            const resp = await fetch('/api/research', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    model: 'claude-sonnet-4-6',
-                    max_tokens: 4096,
-                    system: SYSTEM,
-                    tools: [{ type: 'web_search_20250305', name: 'web_search', max_uses: 6 }],
-                    messages: [{ role: 'user', content: USER }]
-                })
+            const data = await callClaude({
+                model: 'claude-sonnet-4-6',
+                max_tokens: 4096,
+                system: SYSTEM,
+                tools: [{ type: 'web_search_20250305', name: 'web_search', max_uses: 6 }],
+                messages: [{ role: 'user', content: USER }]
             });
 
-            if (!resp.ok) {
-                const err = await resp.json().catch(() => ({}));
-                throw new Error(err.error?.message || `HTTP ${resp.status}`);
-            }
-
-            const data = await resp.json();
-
-            /* Extract text blocks (Claude may have tool_use blocks too) */
-            let raw = '';
-            for (const block of (data.content || [])) {
-                if (block.type === 'text') raw += block.text;
-            }
-
-            /* Strip any accidental markdown fences */
-            raw = raw.replace(/^```(?:json)?\s*/im, '').replace(/\s*```\s*$/im, '').trim();
-
+            const raw = extractText(data);
             let result;
             try { result = JSON.parse(raw); }
             catch (_) {
-                /* Attempt to extract JSON object if surrounded by stray text */
                 const m = raw.match(/\{[\s\S]*\}/);
                 if (m) result = JSON.parse(m[0]);
                 else throw new Error('Could not parse JSON from response. Raw: ' + raw.slice(0, 200));
@@ -684,7 +702,6 @@ Use web search to find: company overview, tech stack, database infrastructure, D
             persistSession(query, result);
             renderResults(result);
             setStatus(null);
-
         } catch (err) {
             console.error(err);
             setStatus('error', `Search failed: ${esc(err.message)}`);
@@ -693,27 +710,174 @@ Use web search to find: company overview, tech stack, database infrastructure, D
         }
     }
 
-    /* ── Render results ── */
+    /* ── Contact research ── */
+    async function runContactSearch() {
+        const name   = document.getElementById('contactName').value.trim();
+        const email  = document.getElementById('contactEmail').value.trim();
+        const domain = document.getElementById('contactDomain').value.trim();
+
+        if (!name && !email) {
+            return setStatus('error', 'Please enter at least a full name or email address.', 'contact');
+        }
+
+        const btn = document.getElementById('contactBtn');
+        btn.disabled = true;
+        document.getElementById('contactResults').style.display = 'none';
+        setStatus('loading', `Researching ${name || email}… searching LinkedIn, company site, and public profiles.`, 'contact');
+
+        const SYSTEM = `You are a sales intelligence assistant for Redgate Software. Your task is to research a specific contact person to help a salesperson prepare for a call.
+
+Search for the person using their name, email, and corporate domain. Find:
+- Their current role and responsibilities
+- LinkedIn profile URL (exact URL if found)
+- Other professional profiles (GitHub, Twitter/X, personal blog, conference talks, articles)
+- Professional background and career history
+- Areas of expertise, technology focus, and interests
+- Recent public activity: blog posts, articles, conference talks, podcasts, social posts
+- Any mentions in news or press
+- Mutual connection points with Redgate's products (database, DevOps, SQL, data management, compliance)
+
+CRITICAL: Respond with ONLY a single valid JSON object. Schema:
+{
+  "name": "string — full name as found",
+  "current_role": "string — job title",
+  "current_company": "string — company name",
+  "linkedin_url": "string — full LinkedIn profile URL, or null",
+  "other_links": [
+    { "label": "string e.g. 'Twitter', 'GitHub', 'Blog', 'Talk'", "url": "string", "note": "string — one line on why relevant" }
+  ],
+  "background": "string — 2–3 sentences on career history and expertise",
+  "tech_focus": "string — technologies, languages, databases, tools they work with or care about",
+  "recent_activity": "string — recent posts, articles, talks, or public activity",
+  "company_context": "string — what their company does and their likely role in tech/purchasing decisions",
+  "talking_points": [
+    "string — specific, personalised talking point for a Redgate sales call based on what you found"
+  ]
+}
+Aim for 3–5 talking points. Only include real URLs. If information is not found, use null or omit.`;
+
+        const parts = [];
+        if (name)   parts.push(`Full name: ${name}`);
+        if (email)  parts.push(`Email: ${email}`);
+        if (domain) parts.push(`Corporate domain: ${domain}`);
+
+        const USER = `Research this contact for a Redgate Software sales call:
+
+${parts.join('\n')}
+
+Search LinkedIn, the company website (${domain || 'infer from email'}), GitHub, Twitter/X, conference sites, and any public sources. Find their background, expertise, recent activity, and anything that would help a salesperson connect with them around database tooling, DevOps, data management, or SQL Server.`;
+
+        try {
+            const data = await callClaude({
+                model: 'claude-sonnet-4-6',
+                max_tokens: 3000,
+                system: SYSTEM,
+                tools: [{ type: 'web_search_20250305', name: 'web_search', max_uses: 8 }],
+                messages: [{ role: 'user', content: USER }]
+            });
+
+            const raw = extractText(data);
+            let result;
+            try { result = JSON.parse(raw); }
+            catch (_) {
+                const m = raw.match(/\{[\s\S]*\}/);
+                if (m) result = JSON.parse(m[0]);
+                else throw new Error('Could not parse response. Raw: ' + raw.slice(0, 200));
+            }
+
+            renderContactResults(result, name || email);
+            setStatus(null, null, 'contact');
+        } catch (err) {
+            console.error(err);
+            setStatus('error', `Contact research failed: ${esc(err.message)}`, 'contact');
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    /* ── Render contact results ── */
+    function renderContactResults(r, fallbackName) {
+        document.getElementById('contactResults').style.display = 'block';
+
+        const displayName = r.name || fallbackName || 'Unknown';
+        const initials    = displayName.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
+
+        document.getElementById('contactAvatar').textContent     = initials;
+        document.getElementById('contactResultName').textContent = displayName;
+        document.getElementById('contactResultRole').textContent =
+            [r.current_role, r.current_company].filter(Boolean).join(' · ') || 'Role not found';
+
+        /* Links row */
+        const linksRow = document.getElementById('contactLinksRow');
+        linksRow.innerHTML = '';
+
+        if (r.linkedin_url) {
+            linksRow.insertAdjacentHTML('beforeend',
+                `<a class="contact-link li" href="${esc(r.linkedin_url)}" target="_blank" rel="noopener">
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                    LinkedIn
+                </a>`);
+        }
+
+        (r.other_links || []).forEach(link => {
+            if (!link.url) return;
+            linksRow.insertAdjacentHTML('beforeend',
+                `<a class="contact-link" href="${esc(link.url)}" target="_blank" rel="noopener" title="${esc(link.note || '')}">${esc(link.label)}</a>`);
+        });
+
+        /* Sections */
+        const sections = document.getElementById('contactSections');
+        sections.innerHTML = '';
+
+        const sectionDefs = [
+            { key: 'background',       title: 'Background & Career' },
+            { key: 'tech_focus',       title: 'Tech Focus & Tools' },
+            { key: 'recent_activity',  title: 'Recent Activity' },
+            { key: 'company_context',  title: 'Company Context' },
+        ];
+
+        sectionDefs.forEach(({ key, title }) => {
+            if (!r[key]) return;
+            sections.insertAdjacentHTML('beforeend', `
+                <div class="contact-section">
+                    <div class="contact-section-title">${esc(title)}</div>
+                    <div class="contact-section-body">${esc(r[key])}</div>
+                </div>`);
+        });
+
+        /* Talking points */
+        if (r.talking_points?.length) {
+            const pts = r.talking_points.map(pt =>
+                `<div class="talking-point"><div class="talking-point-bullet"></div><div>${esc(pt)}</div></div>`
+            ).join('');
+            sections.insertAdjacentHTML('beforeend', `
+                <div class="contact-section talking-points">
+                    <div class="contact-section-title">Sales Talking Points</div>
+                    ${pts}
+                </div>`);
+        }
+
+        document.getElementById('contactResults').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    /* ── Render company results ── */
     function renderResults(r) {
         document.getElementById('results').style.display = 'block';
 
-        /* Summary */
         document.getElementById('summaryBody').textContent = r.summary || 'No summary available.';
 
-        /* Revenue */
         const fig  = document.getElementById('revFigure');
         const meta = document.getElementById('revMeta');
         if (r.revenue?.value) {
             fig.textContent = r.revenue.value;
-            fig.className = 'revenue-figure';
+            fig.className   = 'revenue-figure';
             meta.textContent = r.revenue.period || '';
         } else {
-            fig.textContent = 'Not found';
-            fig.className = 'revenue-figure unknown';
+            fig.textContent  = 'Not found';
+            fig.className    = 'revenue-figure unknown';
             meta.textContent = 'No public revenue data located';
         }
 
-        /* News */
         const container = document.getElementById('newsContainer');
         container.innerHTML = '';
 
@@ -723,7 +887,7 @@ Use web search to find: company overview, tech stack, database infrastructure, D
         } else {
             items.forEach(item => {
                 const div = document.createElement('div');
-                div.className = 'news-item';
+                div.className      = 'news-item';
                 div.dataset.products = JSON.stringify(item.products || []);
 
                 const tags = (item.products || [])
@@ -741,7 +905,7 @@ Use web search to find: company overview, tech stack, database infrastructure, D
         filterNews();
     }
 
-    /* ── Filter news by active products ── */
+    /* ── Filter news ── */
     function filterNews() {
         const items = document.querySelectorAll('.news-item');
         let visible = 0;
@@ -753,20 +917,16 @@ Use web search to find: company overview, tech stack, database infrastructure, D
             if (show) visible++;
         });
 
-        /* Update count badge */
-        const total = items.length;
+        const total   = items.length;
         const countEl = document.getElementById('newsCount');
-        if (countEl) {
-            countEl.textContent = total ? `${visible} of ${total} shown` : '';
-        }
+        if (countEl) countEl.textContent = total ? `${visible} of ${total} shown` : '';
 
-        /* No-match message */
         const container = document.getElementById('newsContainer');
         let noMatch = container.querySelector('.empty-state');
         if (visible === 0 && total > 0) {
             if (!noMatch) {
                 noMatch = document.createElement('div');
-                noMatch.className = 'empty-state';
+                noMatch.className   = 'empty-state';
                 noMatch.textContent = 'No items match the active product filters. Enable more products above.';
                 container.appendChild(noMatch);
             }
@@ -777,29 +937,25 @@ Use web search to find: company overview, tech stack, database infrastructure, D
 
     /* ── Session storage ── */
     function persistSession(query, result) {
-        const key = query.trim().slice(0, 60);
+        const key    = query.trim().slice(0, 60);
         sessionData[key] = { query, result, ts: Date.now() };
 
-        /* Trim to 12 most recent */
         const sorted = Object.entries(sessionData).sort((a, b) => b[1].ts - a[1].ts);
-        if (sorted.length > 12) {
-            sessionData = Object.fromEntries(sorted.slice(0, 12));
-        }
+        if (sorted.length > 12) sessionData = Object.fromEntries(sorted.slice(0, 12));
 
         try { sessionStorage.setItem('rg_session', JSON.stringify(sessionData)); } catch (_) {}
         renderHistory();
     }
 
     function renderHistory() {
-        const wrap = document.getElementById('historyWrap');
-        const row  = document.getElementById('historyRow');
+        const wrap    = document.getElementById('historyWrap');
+        const row     = document.getElementById('historyRow');
         const entries = Object.values(sessionData).sort((a, b) => b.ts - a.ts);
 
         if (!entries.length) { wrap.style.display = 'none'; return; }
         wrap.style.display = 'block';
         row.innerHTML = entries.map(e => {
             const label = e.query.length > 38 ? e.query.slice(0, 38) + '…' : e.query;
-            const safeKey = esc(e.query.trim().slice(0, 60));
             return `<div class="history-chip" onclick="loadSession(${JSON.stringify(e.query.trim().slice(0, 60))})" title="${esc(e.query)}">${esc(label)}</div>`;
         }).join('');
     }
