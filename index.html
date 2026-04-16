@@ -1,0 +1,834 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redgate Pre-Call Discovery</title>
+    <style>
+        :root {
+            --red: #cc0000;
+            --red-dark: #990000;
+            --red-light: #ff4444;
+            --bg: #0d0f18;
+            --surface: #161923;
+            --surface-2: #1e2235;
+            --border: #272d45;
+            --border-hover: #3a4260;
+            --text: #e4e8f0;
+            --text-muted: #7a82a0;
+            --text-dim: #4a5270;
+            --green: #22c55e;
+            --amber: #f59e0b;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            line-height: 1.5;
+        }
+
+        /* ── Header ── */
+        header {
+            background: var(--surface);
+            border-bottom: 1px solid var(--border);
+            padding: 0 32px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .rg-logo {
+            width: 32px;
+            height: 32px;
+            background: var(--red);
+            border-radius: 7px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 16px;
+            color: white;
+            letter-spacing: -1px;
+            flex-shrink: 0;
+        }
+
+        .header-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .header-subtitle {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .header-right {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        .header-badge {
+            background: rgba(204, 0, 0, 0.15);
+            border: 1px solid rgba(204, 0, 0, 0.3);
+            color: var(--red-light);
+            border-radius: 4px;
+            padding: 2px 8px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        /* ── Layout ── */
+        .main {
+            max-width: 1160px;
+            margin: 0 auto;
+            padding: 28px 24px 60px;
+        }
+
+        /* ── Cards ── */
+        .card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 24px;
+            margin-bottom: 16px;
+        }
+
+        .card-label {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            font-weight: 600;
+        }
+
+        /* ── API Key ── */
+        .api-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .api-label {
+            font-size: 13px;
+            color: var(--text-muted);
+            white-space: nowrap;
+        }
+
+        input[type="text"],
+        textarea {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            padding: 9px 13px;
+            font-size: 13px;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            border-color: var(--red);
+        }
+
+
+        /* ── Buttons ── */
+        button {
+            background: var(--red);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background 0.15s, opacity 0.15s, transform 0.1s;
+            white-space: nowrap;
+        }
+
+        button:hover:not(:disabled) { background: var(--red-dark); }
+        button:active:not(:disabled) { transform: scale(0.98); }
+
+        button:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+        }
+
+        .btn-ghost {
+            background: var(--surface-2);
+            color: var(--text-muted);
+            border: 1px solid var(--border);
+        }
+
+        .btn-ghost:hover:not(:disabled) {
+            background: var(--border);
+            color: var(--text);
+        }
+
+        .btn-sm {
+            padding: 7px 14px;
+            font-size: 12px;
+        }
+
+        /* ── Product toggles ── */
+        .products-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .product-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 24px;
+            border: 2px solid var(--border);
+            background: var(--surface-2);
+            cursor: pointer;
+            user-select: none;
+            transition: border-color 0.2s, background 0.2s;
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        .product-pill:hover { border-color: var(--border-hover); }
+
+        .product-pill.on {
+            border-color: var(--red);
+            background: rgba(204, 0, 0, 0.08);
+            color: #fff;
+        }
+
+        .pill-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--border);
+            transition: background 0.2s;
+            flex-shrink: 0;
+        }
+
+        .product-pill.on .pill-dot { background: var(--red-light); }
+
+        /* ── Search input ── */
+        .search-grid {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 14px;
+            align-items: start;
+        }
+
+        textarea#companyInput {
+            width: 100%;
+            resize: vertical;
+            min-height: 90px;
+            line-height: 1.6;
+        }
+
+        .search-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            padding-top: 1px;
+        }
+
+        /* ── History ── */
+        .history-wrap {
+            margin-bottom: 14px;
+        }
+
+        .history-row {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+            margin-top: 8px;
+        }
+
+        .history-chip {
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 4px 11px;
+            font-size: 12px;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.15s;
+            max-width: 220px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .history-chip:hover {
+            border-color: var(--red);
+            color: var(--text);
+        }
+
+        /* ── Status ── */
+        .status-bar {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border-radius: 9px;
+            font-size: 13px;
+            margin-bottom: 16px;
+        }
+
+        .status-bar.loading {
+            background: rgba(245, 158, 11, 0.08);
+            border: 1px solid rgba(245, 158, 11, 0.25);
+            color: var(--amber);
+        }
+
+        .status-bar.error {
+            background: rgba(204, 0, 0, 0.08);
+            border: 1px solid rgba(204, 0, 0, 0.25);
+            color: #ff6666;
+        }
+
+        .spinner {
+            width: 15px;
+            height: 15px;
+            border: 2px solid currentColor;
+            border-top-color: transparent;
+            border-radius: 50%;
+            animation: spin 0.75s linear infinite;
+            flex-shrink: 0;
+            opacity: 0.8;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* ── Results grid ── */
+        .results-pair {
+            display: grid;
+            grid-template-columns: 1fr 280px;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .result-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 22px;
+        }
+
+        .result-box-label {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-dim);
+            font-weight: 700;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+        }
+
+        .result-box-label::before {
+            content: '';
+            display: block;
+            width: 2px;
+            height: 12px;
+            background: var(--red);
+            border-radius: 2px;
+        }
+
+        .summary-body {
+            font-size: 13.5px;
+            line-height: 1.75;
+            color: var(--text);
+            white-space: pre-wrap;
+        }
+
+        .revenue-figure {
+            font-size: 30px;
+            font-weight: 700;
+            color: var(--green);
+            line-height: 1.1;
+            margin-bottom: 5px;
+        }
+
+        .revenue-figure.unknown {
+            font-size: 22px;
+            color: var(--text-dim);
+        }
+
+        .revenue-meta {
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        /* ── News ── */
+        .news-box {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 20px 22px;
+        }
+
+        .news-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+        }
+
+        .news-count {
+            font-size: 12px;
+            color: var(--text-dim);
+        }
+
+        .news-item {
+            border: 1px solid var(--border);
+            border-radius: 9px;
+            padding: 13px 15px;
+            margin-bottom: 9px;
+            transition: border-color 0.15s, background 0.15s;
+        }
+
+        .news-item:last-child { margin-bottom: 0; }
+
+        .news-item:hover {
+            border-color: var(--border-hover);
+            background: var(--surface-2);
+        }
+
+        .news-item.filtered-out { display: none; }
+
+        .news-title {
+            font-size: 13.5px;
+            font-weight: 500;
+            color: var(--text);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+
+        .news-title:hover { color: var(--red-light); }
+
+        .news-desc {
+            font-size: 12px;
+            color: var(--text-muted);
+            line-height: 1.55;
+            margin-bottom: 8px;
+        }
+
+        .news-tags {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .news-tag {
+            font-size: 10.5px;
+            font-weight: 600;
+            background: rgba(204, 0, 0, 0.12);
+            color: rgba(255, 100, 100, 0.9);
+            border: 1px solid rgba(204, 0, 0, 0.25);
+            border-radius: 4px;
+            padding: 2px 7px;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: var(--text-dim);
+            padding: 28px 16px;
+            font-size: 13px;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 780px) {
+            .results-pair { grid-template-columns: 1fr; }
+            .search-grid { grid-template-columns: 1fr; }
+            .search-actions { flex-direction: row; }
+            header { padding: 0 16px; }
+            .main { padding: 16px 14px 40px; }
+            .header-right { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="rg-logo">R</div>
+    <div>
+        <div class="header-title">Pre-Call Discovery</div>
+        <div class="header-subtitle">Redgate Software · Sales Intelligence</div>
+    </div>
+    <div class="header-right">
+        <span class="header-badge">Internal Tool</span>
+        Powered by Claude AI
+    </div>
+</header>
+
+<div class="main">
+
+    <!-- Product focus -->
+    <div class="card">
+        <div class="card-label">Focus Products — click to toggle filters</div>
+        <div class="products-row">
+            <div class="product-pill on" data-product="flyway" onclick="toggleProduct(this)">
+                <div class="pill-dot"></div>Flyway
+            </div>
+            <div class="product-pill on" data-product="tdm" onclick="toggleProduct(this)">
+                <div class="pill-dot"></div>Test Data Manager
+            </div>
+            <div class="product-pill on" data-product="monitor" onclick="toggleProduct(this)">
+                <div class="pill-dot"></div>Redgate Monitor
+            </div>
+            <div class="product-pill on" data-product="toolbelt" onclick="toggleProduct(this)">
+                <div class="pill-dot"></div>Toolbelt Essentials
+            </div>
+        </div>
+    </div>
+
+    <!-- Search -->
+    <div class="card">
+        <div class="card-label">Company Research</div>
+
+        <div id="historyWrap" class="history-wrap" style="display:none">
+            <div style="font-size:11px;color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em">Session history</div>
+            <div class="history-row" id="historyRow"></div>
+        </div>
+
+        <div class="search-grid">
+            <textarea id="companyInput" placeholder="Enter company name, website URL, or any details about the prospect — the more context the better…"></textarea>
+            <div class="search-actions">
+                <button id="searchBtn" onclick="runSearch()">Research Company</button>
+                <button class="btn-ghost" onclick="clearAll()">Clear</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Status -->
+    <div id="statusWrap" style="display:none"></div>
+
+    <!-- Results -->
+    <div id="results" style="display:none">
+
+        <div class="results-pair">
+            <div class="result-box">
+                <div class="result-box-label">Company Summary — Redgate Perspective</div>
+                <div class="summary-body" id="summaryBody"></div>
+            </div>
+            <div class="result-box">
+                <div class="result-box-label">Annual Revenue</div>
+                <div class="revenue-figure" id="revFigure">—</div>
+                <div class="revenue-meta" id="revMeta"></div>
+            </div>
+        </div>
+
+        <div class="news-box">
+            <div class="news-header">
+                <div class="result-box-label" style="margin:0">Relevant News &amp; Intelligence</div>
+                <div class="news-count" id="newsCount"></div>
+            </div>
+            <div id="newsContainer"></div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    /* ── State ── */
+    const PRODUCTS = {
+        flyway:   'Flyway',
+        tdm:      'Test Data Manager',
+        monitor:  'Redgate Monitor',
+        toolbelt: 'Toolbelt Essentials'
+    };
+
+    let activeProducts = new Set(Object.keys(PRODUCTS));
+    let sessionData    = {};   // in-memory mirror of sessionStorage
+
+    /* ── Init ── */
+    (function init() {
+        try {
+            sessionData = JSON.parse(sessionStorage.getItem('rg_session') || '{}');
+        } catch (_) { sessionData = {}; }
+
+        renderHistory();
+
+        document.getElementById('companyInput').addEventListener('keydown', e => {
+            if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); runSearch(); }
+        });
+    })();
+
+    /* ── Product toggles ── */
+    function toggleProduct(el) {
+        const p = el.dataset.product;
+        if (activeProducts.has(p)) { activeProducts.delete(p); el.classList.remove('on'); }
+        else                        { activeProducts.add(p);    el.classList.add('on'); }
+        filterNews();
+    }
+
+    /* ── Status helper ── */
+    function setStatus(type, msg) {
+        const wrap = document.getElementById('statusWrap');
+        if (!type) { wrap.style.display = 'none'; return; }
+        wrap.style.display = 'block';
+        wrap.innerHTML = type === 'loading'
+            ? `<div class="status-bar loading"><div class="spinner"></div>${msg}</div>`
+            : `<div class="status-bar error">⚠&nbsp; ${msg}</div>`;
+    }
+
+    /* ── Main search ── */
+    async function runSearch() {
+        const query = document.getElementById('companyInput').value.trim();
+
+        if (!query) return setStatus('error', 'Please enter a company name or details to research.');
+
+        const btn = document.getElementById('searchBtn');
+        btn.disabled = true;
+        document.getElementById('results').style.display = 'none';
+        setStatus('loading', 'Searching the web and analysing… this usually takes 20–40 seconds.');
+
+        const selected = [...activeProducts].map(p => PRODUCTS[p]).join(', ') || 'all Redgate products';
+
+        const SYSTEM = `You are a pre-call intelligence assistant for Redgate Software's sales team. Redgate sells database DevOps and SQL Server tooling:
+
+• Flyway (key: "flyway") — database schema migration & version control; relevant when a company has DevOps/CI-CD pipelines, database change management pain, compliance around deployments, or frequent release cycles.
+• Test Data Manager (key: "tdm") — test data provisioning, subsetting, and masking; relevant for GDPR/HIPAA/CCPA compliance, slow QA cycles, lack of realistic test data, regulated industries.
+• Redgate Monitor (key: "monitor") — SQL Server & Azure SQL performance monitoring & alerting; relevant for any company running SQL Server or Azure SQL, DBA teams, SLA-critical applications.
+• Toolbelt Essentials (key: "toolbelt") — SQL Compare, Data Compare, SQL Prompt, SQL Search; relevant for development teams actively working with SQL Server who want productivity and quality gains.
+
+Research the given prospect thoroughly using web search. Frame everything through the lens of Redgate's products. Identify signals: cloud migration, DevOps maturity, data compliance, SQL Server usage, team size, tech stack, growth, M&A, digital transformation.
+
+CRITICAL: Respond with ONLY a single valid JSON object — no markdown fences, no prose before or after. Schema:
+{
+  "summary": "string — 2–4 paragraphs covering: what the company does, their tech/database landscape, compliance/regulatory signals, why each selected Redgate product could be relevant. Be specific and sales-actionable.",
+  "revenue": {
+    "value": "formatted string e.g. '$1.2B' / '£340M' / 'approx $80M' — or null",
+    "period": "string e.g. 'FY2024 Annual Revenue' / 'Estimated ARR' — or null"
+  },
+  "news": [
+    {
+      "title": "string",
+      "url": "string — must be a real URL from search results",
+      "description": "string — 1–2 sentences on why this matters for the sales conversation",
+      "products": ["flyway","tdm","monitor","toolbelt"] // include only the relevant product keys
+    }
+  ]
+}
+Aim for 6–10 news/link items. Only include real URLs from search results.`;
+
+        const USER = `Research this prospect for an upcoming Redgate Software sales call.
+
+Company / prospect info:
+${query}
+
+The salesperson's primary product interest: ${selected}.
+
+Use web search to find: company overview, tech stack, database infrastructure, DevOps/cloud initiatives, data compliance obligations, recent news, financial data, headcount. Return the structured JSON.`;
+
+        try {
+            const resp = await fetch('/api/research', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    model: 'claude-sonnet-4-6',
+                    max_tokens: 4096,
+                    system: SYSTEM,
+                    tools: [{ type: 'web_search_20250305', name: 'web_search', max_uses: 6 }],
+                    messages: [{ role: 'user', content: USER }]
+                })
+            });
+
+            if (!resp.ok) {
+                const err = await resp.json().catch(() => ({}));
+                throw new Error(err.error?.message || `HTTP ${resp.status}`);
+            }
+
+            const data = await resp.json();
+
+            /* Extract text blocks (Claude may have tool_use blocks too) */
+            let raw = '';
+            for (const block of (data.content || [])) {
+                if (block.type === 'text') raw += block.text;
+            }
+
+            /* Strip any accidental markdown fences */
+            raw = raw.replace(/^```(?:json)?\s*/im, '').replace(/\s*```\s*$/im, '').trim();
+
+            let result;
+            try { result = JSON.parse(raw); }
+            catch (_) {
+                /* Attempt to extract JSON object if surrounded by stray text */
+                const m = raw.match(/\{[\s\S]*\}/);
+                if (m) result = JSON.parse(m[0]);
+                else throw new Error('Could not parse JSON from response. Raw: ' + raw.slice(0, 200));
+            }
+
+            persistSession(query, result);
+            renderResults(result);
+            setStatus(null);
+
+        } catch (err) {
+            console.error(err);
+            setStatus('error', `Search failed: ${esc(err.message)}`);
+        } finally {
+            btn.disabled = false;
+        }
+    }
+
+    /* ── Render results ── */
+    function renderResults(r) {
+        document.getElementById('results').style.display = 'block';
+
+        /* Summary */
+        document.getElementById('summaryBody').textContent = r.summary || 'No summary available.';
+
+        /* Revenue */
+        const fig  = document.getElementById('revFigure');
+        const meta = document.getElementById('revMeta');
+        if (r.revenue?.value) {
+            fig.textContent = r.revenue.value;
+            fig.className = 'revenue-figure';
+            meta.textContent = r.revenue.period || '';
+        } else {
+            fig.textContent = 'Not found';
+            fig.className = 'revenue-figure unknown';
+            meta.textContent = 'No public revenue data located';
+        }
+
+        /* News */
+        const container = document.getElementById('newsContainer');
+        container.innerHTML = '';
+
+        const items = Array.isArray(r.news) ? r.news : [];
+        if (!items.length) {
+            container.innerHTML = '<div class="empty-state">No news or links were returned.</div>';
+        } else {
+            items.forEach(item => {
+                const div = document.createElement('div');
+                div.className = 'news-item';
+                div.dataset.products = JSON.stringify(item.products || []);
+
+                const tags = (item.products || [])
+                    .map(p => `<span class="news-tag">${esc(PRODUCTS[p] || p)}</span>`)
+                    .join('');
+
+                div.innerHTML = `
+                    <a class="news-title" href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">${esc(item.title)}</a>
+                    <div class="news-desc">${esc(item.description)}</div>
+                    <div class="news-tags">${tags}</div>`;
+                container.appendChild(div);
+            });
+        }
+
+        filterNews();
+    }
+
+    /* ── Filter news by active products ── */
+    function filterNews() {
+        const items = document.querySelectorAll('.news-item');
+        let visible = 0;
+
+        items.forEach(el => {
+            const prods = JSON.parse(el.dataset.products || '[]');
+            const show  = prods.length === 0 || prods.some(p => activeProducts.has(p));
+            el.classList.toggle('filtered-out', !show);
+            if (show) visible++;
+        });
+
+        /* Update count badge */
+        const total = items.length;
+        const countEl = document.getElementById('newsCount');
+        if (countEl) {
+            countEl.textContent = total ? `${visible} of ${total} shown` : '';
+        }
+
+        /* No-match message */
+        const container = document.getElementById('newsContainer');
+        let noMatch = container.querySelector('.empty-state');
+        if (visible === 0 && total > 0) {
+            if (!noMatch) {
+                noMatch = document.createElement('div');
+                noMatch.className = 'empty-state';
+                noMatch.textContent = 'No items match the active product filters. Enable more products above.';
+                container.appendChild(noMatch);
+            }
+        } else if (noMatch && total > 0) {
+            noMatch.remove();
+        }
+    }
+
+    /* ── Session storage ── */
+    function persistSession(query, result) {
+        const key = query.trim().slice(0, 60);
+        sessionData[key] = { query, result, ts: Date.now() };
+
+        /* Trim to 12 most recent */
+        const sorted = Object.entries(sessionData).sort((a, b) => b[1].ts - a[1].ts);
+        if (sorted.length > 12) {
+            sessionData = Object.fromEntries(sorted.slice(0, 12));
+        }
+
+        try { sessionStorage.setItem('rg_session', JSON.stringify(sessionData)); } catch (_) {}
+        renderHistory();
+    }
+
+    function renderHistory() {
+        const wrap = document.getElementById('historyWrap');
+        const row  = document.getElementById('historyRow');
+        const entries = Object.values(sessionData).sort((a, b) => b.ts - a.ts);
+
+        if (!entries.length) { wrap.style.display = 'none'; return; }
+        wrap.style.display = 'block';
+        row.innerHTML = entries.map(e => {
+            const label = e.query.length > 38 ? e.query.slice(0, 38) + '…' : e.query;
+            const safeKey = esc(e.query.trim().slice(0, 60));
+            return `<div class="history-chip" onclick="loadSession(${JSON.stringify(e.query.trim().slice(0, 60))})" title="${esc(e.query)}">${esc(label)}</div>`;
+        }).join('');
+    }
+
+    function loadSession(key) {
+        const entry = sessionData[key];
+        if (!entry) return;
+        document.getElementById('companyInput').value = entry.query;
+        renderResults(entry.result);
+        setStatus(null);
+    }
+
+    /* ── Clear ── */
+    function clearAll() {
+        document.getElementById('companyInput').value = '';
+        document.getElementById('results').style.display = 'none';
+        setStatus(null);
+    }
+
+    /* ── XSS-safe escape ── */
+    function esc(s) {
+        if (s == null) return '';
+        return String(s)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#039;');
+    }
+</script>
+</body>
+</html>

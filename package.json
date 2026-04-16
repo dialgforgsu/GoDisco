@@ -1,0 +1,7 @@
+{
+  "name": "redgate-discovery",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js"
+  }
+}
